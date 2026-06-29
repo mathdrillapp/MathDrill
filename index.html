@@ -42,19 +42,36 @@
             Press Start
         </div>
 
-        <input
-            type="number"
-            id="answer"
-            placeholder="Your Answer"
-            autocomplete="off">
 
-        <button id="submitBtn">
-            Submit
-        </button>
+<input
+    type="number"
+    id="answer"
+    placeholder="Your Answer"
+    autocomplete="off">
 
-        <button id="nextBtn">
-            Start
-        </button>
+<div id="resultBox" style="display:none;">
+
+    <h2 id="resultTitle"></h2>
+
+    <p id="correctAnswerText"></p>
+
+    <button id="retryBtn">
+        🔄 Retry
+    </button>
+
+    <button id="continueBtn">
+        ➡ Next
+    </button>
+
+</div>
+
+<button id="submitBtn">
+    Submit
+</button>
+
+<button id="nextBtn">
+    Start
+</button>
 
     </div>
 
