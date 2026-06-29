@@ -11,7 +11,12 @@ const answer = document.getElementById("answer");
 
 const submitBtn = document.getElementById("submitBtn");
 const nextBtn = document.getElementById("nextBtn");
+const resultBox = document.getElementById("resultBox");
+const resultTitle = document.getElementById("resultTitle");
+const correctAnswerText = document.getElementById("correctAnswerText");
 
+const retryBtn = document.getElementById("retryBtn");
+const continueBtn = document.getElementById("continueBtn");
 const correctEl = document.getElementById("correct");
 const wrongEl = document.getElementById("wrong");
 const accuracyEl = document.getElementById("accuracy");
@@ -152,6 +157,7 @@ function generateQuestion(){
     let [min,max] = getRange();
 
     switch(mode){
+
 case "subtraction":
 
     if(difficulty.value==="easy"){
@@ -252,28 +258,38 @@ case "subtraction":
 // ---------- Submit ----------
 function checkAnswer(){
 
-    if(answer.value==="") return;
+if(Number(answer.value) === correctAnswer){
 
-    timerStarted = true;
+    correct++;
 
-    if(Number(answer.value) === correctAnswer){
+    resultTitle.innerHTML = "✅ Correct!";
+    correctAnswerText.innerHTML = "";
 
-        correct++;
-        alert("✅ Correct!");
+    retryBtn.style.display = "none";
 
-    }else{
+}else{
 
-        wrong++;
-        alert("❌ Wrong!\nCorrect Answer = " + correctAnswer);
+    wrong++;
 
-    }
+    resultTitle.innerHTML = "❌ Wrong!";
+    correctAnswerText.innerHTML = "Correct Answer: <b>" + correctAnswer + "</b>";
 
-    localStorage.setItem("correct",correct);
-    localStorage.setItem("wrong",wrong);
+    retryBtn.style.display = "inline-block";
 
-    updateStats();
+}
 
-    generateQuestion();
+resultBox.style.display = "block";
+
+submitBtn.style.display = "none";
+nextBtn.style.display = "none";
+
+localStorage.setItem("correct",correct);
+localStorage.setItem("wrong",wrong);
+
+updateStats();
+
+return;
+
 
 }
 
@@ -322,6 +338,29 @@ themeBtn.onclick = function(){
 submitBtn.onclick = checkAnswer;
 
 nextBtn.onclick = generateQuestion;
+continueBtn.onclick = function(){
+
+    resultBox.style.display = "none";
+
+    submitBtn.style.display = "block";
+    nextBtn.style.display = "block";
+
+    generateQuestion();
+
+};
+
+retryBtn.onclick = function(){
+
+    resultBox.style.display = "none";
+
+    submitBtn.style.display = "block";
+    nextBtn.style.display = "block";
+
+    answer.value = "";
+
+    answer.focus();
+
+};
 
 answer.addEventListener("keydown",function(e){
 
